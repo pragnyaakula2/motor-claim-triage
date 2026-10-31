@@ -1,0 +1,1010 @@
+{
+ "meta": {
+  "label": "after_v1",
+  "mode": "inproc",
+  "ts": "2026-10-29T08:53:09Z",
+  "prompt_coverage": "v1",
+  "prompt_triage": "v1",
+  "embedding_backend": "hashing",
+  "llm_model_configured": true,
+  "llm_base_url_host": "localhost:8200"
+ },
+ "aggregate": {
+  "scenarios": 24,
+  "task_success_rate": 0.9583,
+  "outcome_accuracy": 0.9583,
+  "answer_rate_on_answerable": 0.9412,
+  "position_accuracy": 0.9412,
+  "route_accuracy": 0.9412,
+  "escalation_recall_on_unanswerable": 1.0,
+  "fabricated_answers_on_unanswerable": 0.0,
+  "rejection_recall": 1.0,
+  "section_4_1_correct": 1,
+  "expected_citation_hit_rate": 1.0,
+  "context_relevance": 0.1856,
+  "context_recall": 0.9412,
+  "groundedness": 0.9667,
+  "faithfulness": 1.0,
+  "hallucination_rate_returned": 0.1875,
+  "draft_groundedness": 0.9686,
+  "draft_faithfulness": 1.0,
+  "draft_hallucination_rate": 0.1765,
+  "first_draft_rejected_by_verifier": 0.0588,
+  "mean_llm_calls": 5.0,
+  "mean_tool_calls": 3.0952
+ },
+ "scenarios": [
+  {
+   "id": "E01",
+   "title": "Ordinary own damage, parked car hit, low cost",
+   "expected": {
+    "outcome": "answer",
+    "position": "PRIMA_FACIE_WITHIN_COVER",
+    "route": "fast_track",
+    "within_permitted_use": "not_applicable",
+    "escalation_code": null
+   },
+   "outcome": "answer",
+   "latency_s": 0.17,
+   "position": "PRIMA_FACIE_WITHIN_COVER",
+   "route": "fast_track",
+   "use": "not_applicable",
+   "code": null,
+   "checks": {
+    "outcome": true,
+    "position": true,
+    "route": true,
+    "use": true
+   },
+   "success": true,
+   "context_relevance": 0.25,
+   "context_recall": 1.0,
+   "verification_attempts": 1,
+   "first_draft_rejected": false,
+   "expected_citation_hit": 1.0,
+   "groundedness": 1.0,
+   "faithfulness": 1.0,
+   "hallucination": false,
+   "ungrounded": [],
+   "unresolved": 0,
+   "unverbatim": 0,
+   "bad_figures": [],
+   "draft_groundedness": 1.0,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": false,
+   "tokens": [
+    8403,
+    556
+   ],
+   "llm_calls": 5,
+   "tool_calls": 3
+  },
+  {
+   "id": "E02",
+   "title": "Section 4.1: food delivery run in own car",
+   "expected": {
+    "outcome": "answer",
+    "position": "RESTRICTION_REQUIRES_VERIFICATION",
+    "route": "investigation",
+    "within_permitted_use": "unverifiable",
+    "escalation_code": null
+   },
+   "outcome": "answer",
+   "latency_s": 0.18,
+   "position": "RESTRICTION_REQUIRES_VERIFICATION",
+   "route": "investigation",
+   "use": "unverifiable",
+   "code": null,
+   "checks": {
+    "outcome": true,
+    "position": true,
+    "route": true,
+    "use": true
+   },
+   "success": true,
+   "context_relevance": 0.25,
+   "context_recall": 1.0,
+   "verification_attempts": 1,
+   "first_draft_rejected": false,
+   "expected_citation_hit": 1.0,
+   "groundedness": 1.0,
+   "faithfulness": 1.0,
+   "hallucination": false,
+   "ungrounded": [],
+   "unresolved": 0,
+   "unverbatim": 0,
+   "bad_figures": [],
+   "draft_groundedness": 1.0,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": false,
+   "tokens": [
+    8515,
+    702
+   ],
+   "llm_calls": 5,
+   "tool_calls": 3
+  },
+  {
+   "id": "E03",
+   "title": "Ride-hailing driver, collision on a trip",
+   "expected": {
+    "outcome": "answer",
+    "position": "RESTRICTION_REQUIRES_VERIFICATION",
+    "route": "investigation",
+    "within_permitted_use": "unverifiable",
+    "escalation_code": null
+   },
+   "outcome": "answer",
+   "latency_s": 0.17,
+   "position": "RESTRICTION_REQUIRES_VERIFICATION",
+   "route": "investigation",
+   "use": "unverifiable",
+   "code": null,
+   "checks": {
+    "outcome": true,
+    "position": true,
+    "route": true,
+    "use": true
+   },
+   "success": true,
+   "context_relevance": 0.25,
+   "context_recall": 1.0,
+   "verification_attempts": 1,
+   "first_draft_rejected": false,
+   "expected_citation_hit": 1.0,
+   "groundedness": 1.0,
+   "faithfulness": 1.0,
+   "hallucination": false,
+   "ungrounded": [],
+   "unresolved": 0,
+   "unverbatim": 0,
+   "bad_figures": [],
+   "draft_groundedness": 1.0,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": false,
+   "tokens": [
+    8435,
+    697
+   ],
+   "llm_calls": 5,
+   "tool_calls": 3
+  },
+  {
+   "id": "E04",
+   "title": "Parcel courier side job, minor scrape",
+   "expected": {
+    "outcome": "answer",
+    "position": "RESTRICTION_REQUIRES_VERIFICATION",
+    "route": "investigation",
+    "within_permitted_use": "unverifiable",
+    "escalation_code": null
+   },
+   "outcome": "answer",
+   "latency_s": 0.15,
+   "position": "RESTRICTION_REQUIRES_VERIFICATION",
+   "route": "investigation",
+   "use": "unverifiable",
+   "code": null,
+   "checks": {
+    "outcome": true,
+    "position": true,
+    "route": true,
+    "use": true
+   },
+   "success": true,
+   "context_relevance": 0.25,
+   "context_recall": 1.0,
+   "verification_attempts": 1,
+   "first_draft_rejected": false,
+   "expected_citation_hit": 1.0,
+   "groundedness": 1.0,
+   "faithfulness": 1.0,
+   "hallucination": false,
+   "ungrounded": [],
+   "unresolved": 0,
+   "unverbatim": 0,
+   "bad_figures": [],
+   "draft_groundedness": 1.0,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": false,
+   "tokens": [
+    8397,
+    695
+   ],
+   "llm_calls": 5,
+   "tool_calls": 3
+  },
+  {
+   "id": "E05",
+   "title": "Own damage above the fast-track limit",
+   "expected": {
+    "outcome": "answer",
+    "position": "PRIMA_FACIE_WITHIN_COVER",
+    "route": "surveyor_assignment",
+    "within_permitted_use": "not_applicable",
+    "escalation_code": null
+   },
+   "outcome": "answer",
+   "latency_s": 0.15,
+   "position": "PRIMA_FACIE_WITHIN_COVER",
+   "route": "surveyor_assignment",
+   "use": "not_applicable",
+   "code": null,
+   "checks": {
+    "outcome": true,
+    "position": true,
+    "route": true,
+    "use": true
+   },
+   "success": true,
+   "context_relevance": 0.25,
+   "context_recall": 1.0,
+   "verification_attempts": 1,
+   "first_draft_rejected": false,
+   "expected_citation_hit": 1.0,
+   "groundedness": 1.0,
+   "faithfulness": 1.0,
+   "hallucination": false,
+   "ungrounded": [],
+   "unresolved": 0,
+   "unverbatim": 0,
+   "bad_figures": [],
+   "draft_groundedness": 1.0,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": false,
+   "tokens": [
+    8367,
+    552
+   ],
+   "llm_calls": 5,
+   "tool_calls": 3
+  },
+  {
+   "id": "E06",
+   "title": "Theft with FIR filed",
+   "expected": {
+    "outcome": "answer",
+    "position": "PRIMA_FACIE_WITHIN_COVER",
+    "route": "investigation",
+    "within_permitted_use": "not_applicable",
+    "escalation_code": null
+   },
+   "outcome": "answer",
+   "latency_s": 0.2,
+   "position": "PRIMA_FACIE_WITHIN_COVER",
+   "route": "investigation",
+   "use": "not_applicable",
+   "code": null,
+   "checks": {
+    "outcome": true,
+    "position": true,
+    "route": true,
+    "use": true
+   },
+   "success": true,
+   "context_relevance": 0.1818,
+   "context_recall": 1.0,
+   "verification_attempts": 1,
+   "first_draft_rejected": false,
+   "expected_citation_hit": 1.0,
+   "groundedness": 1.0,
+   "faithfulness": 1.0,
+   "hallucination": false,
+   "ungrounded": [],
+   "unresolved": 0,
+   "unverbatim": 0,
+   "bad_figures": [],
+   "draft_groundedness": 1.0,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": false,
+   "tokens": [
+    12114,
+    727
+   ],
+   "llm_calls": 6,
+   "tool_calls": 4
+  },
+  {
+   "id": "E07",
+   "title": "Theft without a police report",
+   "expected": {
+    "outcome": "answer",
+    "position": "CONDITION_NOT_MET_RISK",
+    "route": "investigation",
+    "within_permitted_use": null,
+    "escalation_code": null
+   },
+   "outcome": "answer",
+   "latency_s": 0.17,
+   "position": "CONDITION_NOT_MET_RISK",
+   "route": "investigation",
+   "use": "not_applicable",
+   "code": null,
+   "checks": {
+    "outcome": true,
+    "position": true,
+    "route": true
+   },
+   "success": true,
+   "context_relevance": 0.0909,
+   "context_recall": 1.0,
+   "verification_attempts": 1,
+   "first_draft_rejected": false,
+   "expected_citation_hit": 1.0,
+   "groundedness": 0.8333,
+   "faithfulness": 1.0,
+   "hallucination": true,
+   "ungrounded": [
+    "No police report is recorded on the claim."
+   ],
+   "unresolved": 0,
+   "unverbatim": 0,
+   "bad_figures": [],
+   "draft_groundedness": 0.8333,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": true,
+   "tokens": [
+    12107,
+    738
+   ],
+   "llm_calls": 6,
+   "tool_calls": 4
+  },
+  {
+   "id": "E08",
+   "title": "Total loss after a fire",
+   "expected": {
+    "outcome": "answer",
+    "position": "PRIMA_FACIE_WITHIN_COVER",
+    "route": "surveyor_assignment",
+    "within_permitted_use": null,
+    "escalation_code": null
+   },
+   "outcome": "escalation",
+   "latency_s": 0.45,
+   "position": null,
+   "route": null,
+   "use": null,
+   "code": "VERIFICATION_FAILED",
+   "checks": {
+    "outcome": false
+   },
+   "success": false,
+   "context_relevance": 0.0,
+   "context_recall": 0.0,
+   "verification_attempts": 3,
+   "first_draft_rejected": true,
+   "draft_groundedness": 1.0,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": false,
+   "tokens": [
+    36225,
+    1595
+   ],
+   "llm_calls": 16,
+   "tool_calls": 12
+  },
+  {
+   "id": "E09",
+   "title": "Third-party property damage",
+   "expected": {
+    "outcome": "answer",
+    "position": "PRIMA_FACIE_WITHIN_COVER",
+    "route": "surveyor_assignment",
+    "within_permitted_use": null,
+    "escalation_code": null
+   },
+   "outcome": "answer",
+   "latency_s": 0.18,
+   "position": "PRIMA_FACIE_WITHIN_COVER",
+   "route": "surveyor_assignment",
+   "use": "not_applicable",
+   "code": null,
+   "checks": {
+    "outcome": true,
+    "position": true,
+    "route": true
+   },
+   "success": true,
+   "context_relevance": 0.1,
+   "context_recall": 1.0,
+   "verification_attempts": 1,
+   "first_draft_rejected": false,
+   "expected_citation_hit": 1.0,
+   "groundedness": 1.0,
+   "faithfulness": 1.0,
+   "hallucination": false,
+   "ungrounded": [],
+   "unresolved": 0,
+   "unverbatim": 0,
+   "bad_figures": [],
+   "draft_groundedness": 1.0,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": false,
+   "tokens": [
+    12488,
+    620
+   ],
+   "llm_calls": 6,
+   "tool_calls": 4
+  },
+  {
+   "id": "E10",
+   "title": "Third-party injury, pedestrian hit",
+   "expected": {
+    "outcome": "answer",
+    "position": "PRIMA_FACIE_WITHIN_COVER",
+    "route": "surveyor_assignment",
+    "within_permitted_use": null,
+    "escalation_code": null
+   },
+   "outcome": "answer",
+   "latency_s": 0.19,
+   "position": "PRIMA_FACIE_WITHIN_COVER",
+   "route": "surveyor_assignment",
+   "use": "not_applicable",
+   "code": null,
+   "checks": {
+    "outcome": true,
+    "position": true,
+    "route": true
+   },
+   "success": true,
+   "context_relevance": 0.1,
+   "context_recall": 1.0,
+   "verification_attempts": 1,
+   "first_draft_rejected": false,
+   "expected_citation_hit": 1.0,
+   "groundedness": 1.0,
+   "faithfulness": 1.0,
+   "hallucination": false,
+   "ungrounded": [],
+   "unresolved": 0,
+   "unverbatim": 0,
+   "bad_figures": [],
+   "draft_groundedness": 1.0,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": false,
+   "tokens": [
+    12421,
+    616
+   ],
+   "llm_calls": 6,
+   "tool_calls": 4
+  },
+  {
+   "id": "E11",
+   "title": "Driver mentions drinking alcohol",
+   "expected": {
+    "outcome": "answer",
+    "position": "RESTRICTION_LIKELY_APPLIES",
+    "route": "investigation",
+    "within_permitted_use": null,
+    "escalation_code": null
+   },
+   "outcome": "answer",
+   "latency_s": 0.15,
+   "position": "RESTRICTION_LIKELY_APPLIES",
+   "route": "investigation",
+   "use": "not_applicable",
+   "code": null,
+   "checks": {
+    "outcome": true,
+    "position": true,
+    "route": true
+   },
+   "success": true,
+   "context_relevance": 0.5,
+   "context_recall": 1.0,
+   "verification_attempts": 1,
+   "first_draft_rejected": false,
+   "expected_citation_hit": 1.0,
+   "groundedness": 0.8,
+   "faithfulness": 1.0,
+   "hallucination": true,
+   "ungrounded": [
+    "Checked General Exceptions (applicable to all sections) (p.5): no indication of use outside the permitted purposes."
+   ],
+   "unresolved": 0,
+   "unverbatim": 0,
+   "bad_figures": [],
+   "draft_groundedness": 0.8,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": true,
+   "tokens": [
+    8529,
+    703
+   ],
+   "llm_calls": 5,
+   "tool_calls": 3
+  },
+  {
+   "id": "E12",
+   "title": "Flood damage, low estimate",
+   "expected": {
+    "outcome": "answer",
+    "position": "PRIMA_FACIE_WITHIN_COVER",
+    "route": "fast_track",
+    "within_permitted_use": null,
+    "escalation_code": null
+   },
+   "outcome": "answer",
+   "latency_s": 0.15,
+   "position": "PRIMA_FACIE_WITHIN_COVER",
+   "route": "fast_track",
+   "use": "not_applicable",
+   "code": null,
+   "checks": {
+    "outcome": true,
+    "position": true,
+    "route": true
+   },
+   "success": true,
+   "context_relevance": 0.125,
+   "context_recall": 1.0,
+   "verification_attempts": 1,
+   "first_draft_rejected": false,
+   "expected_citation_hit": 1.0,
+   "groundedness": 1.0,
+   "faithfulness": 1.0,
+   "hallucination": false,
+   "ungrounded": [],
+   "unresolved": 0,
+   "unverbatim": 0,
+   "bad_figures": [],
+   "draft_groundedness": 1.0,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": false,
+   "tokens": [
+    8366,
+    553
+   ],
+   "llm_calls": 5,
+   "tool_calls": 3
+  },
+  {
+   "id": "E13",
+   "title": "Reported 12 days late and loss 10 days after inception",
+   "expected": {
+    "outcome": "answer",
+    "position": "PRIMA_FACIE_WITHIN_COVER",
+    "route": "investigation",
+    "within_permitted_use": null,
+    "escalation_code": null
+   },
+   "outcome": "answer",
+   "latency_s": 0.16,
+   "position": "PRIMA_FACIE_WITHIN_COVER",
+   "route": "investigation",
+   "use": "not_applicable",
+   "code": null,
+   "checks": {
+    "outcome": true,
+    "position": true,
+    "route": true
+   },
+   "success": true,
+   "context_relevance": 0.125,
+   "context_recall": 1.0,
+   "verification_attempts": 1,
+   "first_draft_rejected": false,
+   "expected_citation_hit": 1.0,
+   "groundedness": 1.0,
+   "faithfulness": 1.0,
+   "hallucination": false,
+   "ungrounded": [],
+   "unresolved": 0,
+   "unverbatim": 0,
+   "bad_figures": [],
+   "draft_groundedness": 1.0,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": false,
+   "tokens": [
+    8455,
+    556
+   ],
+   "llm_calls": 5,
+   "tool_calls": 3
+  },
+  {
+   "id": "E14",
+   "title": "Driver licence reported invalid",
+   "expected": {
+    "outcome": "answer",
+    "position": "PRIMA_FACIE_WITHIN_COVER",
+    "route": "investigation",
+    "within_permitted_use": null,
+    "escalation_code": null
+   },
+   "outcome": "answer",
+   "latency_s": 0.16,
+   "position": "PRIMA_FACIE_WITHIN_COVER",
+   "route": "investigation",
+   "use": "not_applicable",
+   "code": null,
+   "checks": {
+    "outcome": true,
+    "position": true,
+    "route": true
+   },
+   "success": true,
+   "context_relevance": 0.125,
+   "context_recall": 1.0,
+   "verification_attempts": 1,
+   "first_draft_rejected": false,
+   "expected_citation_hit": 1.0,
+   "groundedness": 1.0,
+   "faithfulness": 1.0,
+   "hallucination": false,
+   "ungrounded": [],
+   "unresolved": 0,
+   "unverbatim": 0,
+   "bad_figures": [],
+   "draft_groundedness": 1.0,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": false,
+   "tokens": [
+    8427,
+    556
+   ],
+   "llm_calls": 5,
+   "tool_calls": 3
+  },
+  {
+   "id": "E15",
+   "title": "Vehicle not drivable, towed",
+   "expected": {
+    "outcome": "answer",
+    "position": "PRIMA_FACIE_WITHIN_COVER",
+    "route": "surveyor_assignment",
+    "within_permitted_use": null,
+    "escalation_code": null
+   },
+   "outcome": "answer",
+   "latency_s": 0.16,
+   "position": "PRIMA_FACIE_WITHIN_COVER",
+   "route": "surveyor_assignment",
+   "use": "not_applicable",
+   "code": null,
+   "checks": {
+    "outcome": true,
+    "position": true,
+    "route": true
+   },
+   "success": true,
+   "context_relevance": 0.125,
+   "context_recall": 1.0,
+   "verification_attempts": 1,
+   "first_draft_rejected": false,
+   "expected_citation_hit": 1.0,
+   "groundedness": 1.0,
+   "faithfulness": 1.0,
+   "hallucination": false,
+   "ungrounded": [],
+   "unresolved": 0,
+   "unverbatim": 0,
+   "bad_figures": [],
+   "draft_groundedness": 1.0,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": false,
+   "tokens": [
+    8412,
+    556
+   ],
+   "llm_calls": 5,
+   "tool_calls": 3
+  },
+  {
+   "id": "E16",
+   "title": "Commercial vehicle class (outside corpus)",
+   "expected": {
+    "outcome": "escalation",
+    "position": null,
+    "route": null,
+    "within_permitted_use": null,
+    "escalation_code": "OUT_OF_CORPUS"
+   },
+   "outcome": "escalation",
+   "latency_s": 0.05,
+   "position": null,
+   "route": null,
+   "use": null,
+   "code": "OUT_OF_CORPUS",
+   "checks": {
+    "outcome": true,
+    "code": true
+   },
+   "success": true,
+   "context_relevance": null,
+   "context_recall": null,
+   "verification_attempts": 0,
+   "first_draft_rejected": false,
+   "tokens": [
+    333,
+    80
+   ],
+   "llm_calls": 1,
+   "tool_calls": 0
+  },
+  {
+   "id": "E17",
+   "title": "Two-wheeler (outside corpus)",
+   "expected": {
+    "outcome": "escalation",
+    "position": null,
+    "route": null,
+    "within_permitted_use": null,
+    "escalation_code": "OUT_OF_CORPUS"
+   },
+   "outcome": "escalation",
+   "latency_s": 0.1,
+   "position": null,
+   "route": null,
+   "use": null,
+   "code": "OUT_OF_CORPUS",
+   "checks": {
+    "outcome": true,
+    "code": true
+   },
+   "success": true,
+   "context_relevance": null,
+   "context_recall": null,
+   "verification_attempts": 0,
+   "first_draft_rejected": false,
+   "tokens": [
+    333,
+    80
+   ],
+   "llm_calls": 1,
+   "tool_calls": 0
+  },
+  {
+   "id": "E18",
+   "title": "Zero-depreciation add-on claim (not in wording)",
+   "expected": {
+    "outcome": "escalation",
+    "position": null,
+    "route": null,
+    "within_permitted_use": null,
+    "escalation_code": "OUT_OF_CORPUS"
+   },
+   "outcome": "escalation",
+   "latency_s": 0.07,
+   "position": null,
+   "route": null,
+   "use": null,
+   "code": "OUT_OF_CORPUS",
+   "checks": {
+    "outcome": true,
+    "code": true
+   },
+   "success": true,
+   "context_relevance": null,
+   "context_recall": null,
+   "verification_attempts": 0,
+   "first_draft_rejected": false,
+   "tokens": [
+    335,
+    75
+   ],
+   "llm_calls": 1,
+   "tool_calls": 0
+  },
+  {
+   "id": "E19",
+   "title": "Non-motor claim",
+   "expected": {
+    "outcome": "escalation",
+    "position": null,
+    "route": null,
+    "within_permitted_use": null,
+    "escalation_code": "OUT_OF_CORPUS"
+   },
+   "outcome": "escalation",
+   "latency_s": 0.05,
+   "position": null,
+   "route": null,
+   "use": null,
+   "code": "OUT_OF_CORPUS",
+   "checks": {
+    "outcome": true,
+    "code": true
+   },
+   "success": true,
+   "context_relevance": null,
+   "context_recall": null,
+   "verification_attempts": 0,
+   "first_draft_rejected": false,
+   "tokens": [
+    324,
+    77
+   ],
+   "llm_calls": 1,
+   "tool_calls": 0
+  },
+  {
+   "id": "E20",
+   "title": "Prompt injection in claim text",
+   "expected": {
+    "outcome": "rejected",
+    "position": null,
+    "route": null,
+    "within_permitted_use": null,
+    "escalation_code": null
+   },
+   "outcome": "rejected",
+   "latency_s": 0.0,
+   "position": null,
+   "route": null,
+   "use": null,
+   "code": null,
+   "checks": {
+    "outcome": true
+   },
+   "success": true,
+   "context_relevance": null,
+   "context_recall": null,
+   "verification_attempts": 0,
+   "first_draft_rejected": false,
+   "tokens": [
+    0,
+    0
+   ],
+   "llm_calls": 0,
+   "tool_calls": 0
+  },
+  {
+   "id": "E21",
+   "title": "Malformed: bad registration and phone",
+   "expected": {
+    "outcome": "rejected",
+    "position": null,
+    "route": null,
+    "within_permitted_use": null,
+    "escalation_code": null
+   },
+   "outcome": "rejected",
+   "latency_s": 0.0,
+   "position": null,
+   "route": null,
+   "use": null,
+   "code": null,
+   "checks": {
+    "outcome": true
+   },
+   "success": true,
+   "context_relevance": null,
+   "context_recall": null,
+   "verification_attempts": 0,
+   "first_draft_rejected": false,
+   "tokens": [
+    0,
+    0
+   ],
+   "llm_calls": 0,
+   "tool_calls": 0
+  },
+  {
+   "id": "E22",
+   "title": "Cross-field: loss outside policy period",
+   "expected": {
+    "outcome": "rejected",
+    "position": null,
+    "route": null,
+    "within_permitted_use": null,
+    "escalation_code": null
+   },
+   "outcome": "rejected",
+   "latency_s": 0.0,
+   "position": null,
+   "route": null,
+   "use": null,
+   "code": null,
+   "checks": {
+    "outcome": true
+   },
+   "success": true,
+   "context_relevance": null,
+   "context_recall": null,
+   "verification_attempts": 0,
+   "first_draft_rejected": false,
+   "tokens": [
+    0,
+    0
+   ],
+   "llm_calls": 0,
+   "tool_calls": 0
+  },
+  {
+   "id": "E23",
+   "title": "Declared own damage but narrative describes theft",
+   "expected": {
+    "outcome": "answer",
+    "position": "CONDITION_NOT_MET_RISK",
+    "route": "investigation",
+    "within_permitted_use": null,
+    "escalation_code": null
+   },
+   "outcome": "answer",
+   "latency_s": 0.2,
+   "position": "CONDITION_NOT_MET_RISK",
+   "route": "investigation",
+   "use": "not_applicable",
+   "code": null,
+   "checks": {
+    "outcome": true,
+    "position": true,
+    "route": true
+   },
+   "success": true,
+   "context_relevance": 0.1818,
+   "context_recall": 1.0,
+   "verification_attempts": 1,
+   "first_draft_rejected": false,
+   "expected_citation_hit": 1.0,
+   "groundedness": 0.8333,
+   "faithfulness": 1.0,
+   "hallucination": true,
+   "ungrounded": [
+    "No police report is recorded on the claim."
+   ],
+   "unresolved": 0,
+   "unverbatim": 0,
+   "bad_figures": [],
+   "draft_groundedness": 0.8333,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": true,
+   "tokens": [
+    12169,
+    736
+   ],
+   "llm_calls": 6,
+   "tool_calls": 4
+  },
+  {
+   "id": "E24",
+   "title": "Business use (client visit), collision",
+   "expected": {
+    "outcome": "answer",
+    "position": "PRIMA_FACIE_WITHIN_COVER",
+    "route": "fast_track",
+    "within_permitted_use": "not_applicable",
+    "escalation_code": null
+   },
+   "outcome": "answer",
+   "latency_s": 0.17,
+   "position": "PRIMA_FACIE_WITHIN_COVER",
+   "route": "fast_track",
+   "use": "not_applicable",
+   "code": null,
+   "checks": {
+    "outcome": true,
+    "position": true,
+    "route": true,
+    "use": true
+   },
+   "success": true,
+   "context_relevance": 0.25,
+   "context_recall": 1.0,
+   "verification_attempts": 1,
+   "first_draft_rejected": false,
+   "expected_citation_hit": 1.0,
+   "groundedness": 1.0,
+   "faithfulness": 1.0,
+   "hallucination": false,
+   "ungrounded": [],
+   "unresolved": 0,
+   "unverbatim": 0,
+   "bad_figures": [],
+   "draft_groundedness": 1.0,
+   "draft_faithfulness": 1.0,
+   "draft_hallucination": false,
+   "tokens": [
+    8367,
+    551
+   ],
+   "llm_calls": 5,
+   "tool_calls": 3
+  }
+ ]
+}

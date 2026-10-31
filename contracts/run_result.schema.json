@@ -1,0 +1,287 @@
+{
+  "$defs": {
+    "Citation": {
+      "properties": {
+        "clause_id": {
+          "title": "Clause Id",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "page_start": {
+          "title": "Page Start",
+          "type": "integer"
+        },
+        "page_end": {
+          "title": "Page End",
+          "type": "integer"
+        },
+        "section": {
+          "title": "Section",
+          "type": "string"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        },
+        "quote": {
+          "title": "Quote",
+          "type": "string"
+        }
+      },
+      "required": [
+        "clause_id",
+        "source",
+        "page_start",
+        "page_end",
+        "section",
+        "role",
+        "quote"
+      ],
+      "title": "Citation",
+      "type": "object"
+    },
+    "Escalation": {
+      "properties": {
+        "to_human": {
+          "title": "To Human",
+          "type": "boolean"
+        },
+        "reason_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason Code"
+        },
+        "detail": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Detail"
+        },
+        "escalation_path": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Escalation Path",
+          "type": "array"
+        }
+      },
+      "required": [
+        "to_human"
+      ],
+      "title": "Escalation",
+      "type": "object"
+    },
+    "Recommendation": {
+      "properties": {
+        "claim_type": {
+          "title": "Claim Type",
+          "type": "string"
+        },
+        "coverage_position": {
+          "title": "Coverage Position",
+          "type": "string"
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        },
+        "route": {
+          "anyOf": [
+            {
+              "enum": [
+                "fast_track",
+                "surveyor_assignment",
+                "investigation"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Route"
+        },
+        "route_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Route Reason"
+        },
+        "within_permitted_use": {
+          "default": "not_applicable",
+          "enum": [
+            "yes",
+            "no",
+            "unverifiable",
+            "not_applicable"
+          ],
+          "title": "Within Permitted Use",
+          "type": "string"
+        },
+        "citations": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Citation"
+          },
+          "title": "Citations",
+          "type": "array"
+        },
+        "confidence": {
+          "default": "none",
+          "enum": [
+            "none",
+            "low",
+            "medium",
+            "high"
+          ],
+          "title": "Confidence",
+          "type": "string"
+        },
+        "advisory_notice": {
+          "default": "Advisory only. This is a recommendation with supporting evidence; it is not an approval or rejection. A human claims handler decides.",
+          "title": "Advisory Notice",
+          "type": "string"
+        }
+      },
+      "required": [
+        "claim_type",
+        "coverage_position",
+        "summary"
+      ],
+      "title": "Recommendation",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "queued",
+        "triaging",
+        "analyzing",
+        "completed",
+        "escalated",
+        "failed"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "degraded": {
+      "default": false,
+      "title": "Degraded",
+      "type": "boolean"
+    },
+    "recommendation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Recommendation"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "escalation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Escalation"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "verification": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Verification"
+    },
+    "security_flags": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Security Flags",
+      "type": "array"
+    },
+    "prompt_versions": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Prompt Versions",
+      "type": "object"
+    },
+    "cost_usd": {
+      "default": 0.0,
+      "title": "Cost Usd",
+      "type": "number"
+    },
+    "tokens": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Tokens",
+      "type": "object"
+    },
+    "timings": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Timings",
+      "type": "object"
+    },
+    "partial_findings": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Partial Findings"
+    }
+  },
+  "required": [
+    "run_id",
+    "status"
+  ],
+  "title": "RunResult",
+  "type": "object"
+}

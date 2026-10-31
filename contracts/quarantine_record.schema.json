@@ -1,0 +1,79 @@
+{
+  "$defs": {
+    "FieldError": {
+      "properties": {
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field",
+        "code",
+        "message"
+      ],
+      "title": "FieldError",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "quarantine_id": {
+      "title": "Quarantine Id",
+      "type": "string"
+    },
+    "received_at": {
+      "title": "Received At",
+      "type": "number"
+    },
+    "client_id": {
+      "title": "Client Id",
+      "type": "string"
+    },
+    "correlation_id": {
+      "title": "Correlation Id",
+      "type": "string"
+    },
+    "reason": {
+      "title": "Reason",
+      "type": "string"
+    },
+    "errors": {
+      "items": {
+        "$ref": "#/$defs/FieldError"
+      },
+      "title": "Errors",
+      "type": "array"
+    },
+    "payload_excerpt": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "title": "Payload Excerpt"
+    }
+  },
+  "required": [
+    "quarantine_id",
+    "received_at",
+    "client_id",
+    "correlation_id",
+    "reason",
+    "errors",
+    "payload_excerpt"
+  ],
+  "title": "QuarantineRecord",
+  "type": "object"
+}

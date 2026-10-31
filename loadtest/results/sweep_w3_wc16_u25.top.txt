@@ -1,0 +1,16 @@
+top - 07:25:06 up 18 min,  0 user,  load average: 5.21, 2.76, 1.28
+Tasks:  77 total,   4 running,  73 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 90.9 us,  9.1 sy,  0.0 ni,  0.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st 
+MiB Mem :   8027.6 total,   6356.3 free,   1560.6 used,    337.2 buff/cache     
+MiB Swap:      0.0 total,      0.0 free,      0.0 used.   6467.0 avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+ 1930 root      20   0 1494704 122340  23428 R  35.3   1.5   0:21.93 uvicorn
+ 1933 root      20   0 1255552 263300  21072 S  29.4   3.2   0:11.17 python
+ 1934 root      20   0 1256928 265124  21124 S  17.6   3.2   0:11.11 python
+ 1956 root      20   0  880088 113924  20704 R  17.6   1.4   0:14.27 locust
+ 1904 root      20   0   75672  25220  10236 S   5.9   0.3   0:01.99 redis-server
+ 1910 root      20   0  174692  54072  17804 R   5.9   0.7   0:03.11 uvicorn
+ 1911 root      20   0 1196068 106616  34268 S   5.9   1.3   0:06.40 uvicorn
+ 1931 root      20   0 1233300  91136  20980 S   5.9   1.1   0:03.97 python
+    1 root      20   0   21712   6552   6108 S   0.0   0.1   0:01.59 process_api

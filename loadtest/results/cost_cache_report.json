@@ -1,0 +1,39 @@
+{
+ "A_run_cache_bypassed": {
+  "phase": "A",
+  "runs": 60,
+  "p50_s": 4.52,
+  "p95_s": 12.45,
+  "cost_per_100_runs_usd": 0.22424,
+  "cache_hits": 0
+ },
+ "cost_by_step_per_100_runs": {
+  "triage:classify": {
+   "cost_usd": 0.0096,
+   "prompt_tokens": 33075,
+   "completion_tokens": 7750,
+   "calls": 100
+  },
+  "coverage:decide": {
+   "cost_usd": 0.21464,
+   "prompt_tokens": 1169983,
+   "completion_tokens": 65200,
+   "calls": 525
+  }
+ },
+ "largest_cost_driver": "coverage:decide",
+ "retrieval_cache": {
+  "search_hit_mean_ms": 1.62,
+  "search_miss_mean_ms": null,
+  "hits": 170,
+  "misses": 0
+ },
+ "B_run_cache_enabled_replay": {
+  "phase": "B",
+  "runs": 60,
+  "p50_s": 0.02,
+  "p95_s": 13.01,
+  "cost_per_100_runs_usd": 0.05327,
+  "cache_hits": 55
+ }
+}

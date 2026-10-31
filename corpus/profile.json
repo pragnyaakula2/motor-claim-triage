@@ -1,0 +1,25 @@
+{
+  "insurer": "HDFC ERGO General Insurance Company Limited",
+  "product": "Private Car Package Policy (standard form, IRDAI)",
+  "documents": {
+    "Private-Car-Package-Policy.pdf": {
+      "doc_code": "PCPP",
+      "title": "Private Car Package Policy wording",
+      "kind": "policy",
+      "version": "UIN IRDAN125RP0001V02201415 (as printed in the PDF header)",
+      "strip_line_patterns": ["^\\s*HDFC ERGO\\s+General Insurance\\s*$"],
+      "strip_block_patterns": ["HDFC ERGO General Insurance Company Limited CIN.*?Policy wording\\s+\\d+"],
+      "skip_pages": []
+    },
+    "Motor Insurance Claims.pdf": {
+      "doc_code": "MIC",
+      "title": "HDFC ERGO motor insurance claims web page (claims procedure)",
+      "kind": "procedure",
+      "version": "web page printed 2026-10-23",
+      "strip_line_patterns": ["^Motor Insurance Claims https://", "^\\d+ of \\d+$", "^\\d{2}/\\d{2}/\\d{2}, \\d{2}:\\d{2}$"],
+      "strip_block_patterns": [],
+      "skip_pages": [5, 6],
+      "dedouble": true
+    }
+  }
+}

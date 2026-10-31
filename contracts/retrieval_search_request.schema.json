@@ -1,0 +1,53 @@
+{
+  "properties": {
+    "query": {
+      "maxLength": 1000,
+      "minLength": 2,
+      "title": "Query",
+      "type": "string"
+    },
+    "top_k": {
+      "default": 5,
+      "maximum": 15,
+      "minimum": 1,
+      "title": "Top K",
+      "type": "integer"
+    },
+    "section_type": {
+      "anyOf": [
+        {
+          "enum": [
+            "cover",
+            "exclusion",
+            "condition",
+            "definition",
+            "endorsement",
+            "procedure",
+            "admin"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Section Type"
+    },
+    "mode": {
+      "default": "hybrid",
+      "enum": [
+        "hybrid",
+        "dense",
+        "keyword"
+      ],
+      "title": "Mode",
+      "type": "string"
+    }
+  },
+  "required": [
+    "query"
+  ],
+  "title": "SearchRequest",
+  "type": "object"
+}

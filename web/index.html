@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Claim Triage Client</title>
+<style>
+ :root{--bg:#fff;--fg:#1a1a1a;--mut:#666;--bd:#d6d6d6;--ok:#176f3a;--warn:#9a5b00;--bad:#a4262c;--pane:#f6f7f9}
+ @media(prefers-color-scheme:dark){:root{--bg:#15171a;--fg:#e8e8e8;--mut:#9aa0a6;--bd:#33373d;--ok:#5fcf8b;--warn:#f0b35a;--bad:#ff8a8f;--pane:#1d2024}}
+ body{font:14px/1.45 system-ui,sans-serif;margin:0;background:var(--bg);color:var(--fg)}
+ main{max-width:1100px;margin:0 auto;padding:16px;display:grid;gap:16px;grid-template-columns:1fr 1fr}
+ @media(max-width:800px){main{grid-template-columns:1fr}}
+ h1{font-size:18px;margin:0 0 4px} h2{font-size:15px;margin:0 0 8px}
+ section{border:1px solid var(--bd);border-radius:6px;padding:12px;background:var(--pane)}
+ textarea{width:100%;height:340px;font:12px/1.4 ui-monospace,monospace;background:var(--bg);color:var(--fg);border:1px solid var(--bd);border-radius:4px;box-sizing:border-box}
+ select,button,input{font:inherit;padding:6px 10px;border:1px solid var(--bd);border-radius:4px;background:var(--bg);color:var(--fg)}
+ button{cursor:pointer} button.primary{background:var(--fg);color:var(--bg)}
+ .row{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+ .tag{display:inline-block;padding:1px 8px;border-radius:10px;border:1px solid var(--bd);font-size:12px}
+ .ok{color:var(--ok)} .warn{color:var(--warn)} .bad{color:var(--bad)} .mut{color:var(--mut)}
+ blockquote{margin:4px 0 10px;padding:6px 10px;border-left:3px solid var(--bd);background:var(--bg);font-size:13px}
+ table{border-collapse:collapse;width:100%;font-size:12px} td,th{border-bottom:1px solid var(--bd);padding:3px 6px;text-align:left;vertical-align:top}
+ pre{white-space:pre-wrap;word-break:break-word;font-size:12px}
+ .full{grid-column:1/-1}
+ .tabs{display:flex;gap:0;margin:8px 0}.tabs button{border-radius:0}.tabs button.on{background:var(--fg);color:var(--bg)}
+ fieldset{border:1px solid var(--bd);border-radius:4px;margin:0 0 8px;padding:6px 10px 8px}legend{font-weight:600;font-size:12px;padding:0 4px}
+ .g{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px}.g label{display:flex;flex-direction:column;font-size:12px;color:var(--mut)}
+ .g label.w{grid-column:1/-1}.g input,.g select,.g textarea{width:100%;box-sizing:border-box;color:var(--fg)}.g textarea{height:90px;font:13px/1.4 system-ui,sans-serif}
+ .chk{flex-direction:row!important;align-items:center;gap:6px;color:var(--fg)!important}.chk input{width:auto}
+</style></head><body><main>
+<section><h1>Motor claim triage - client</h1>
+ <div class="mut">Advisory only: a human claims handler decides.</div>
+ <div class="row"><select id="sample"></select><button id="load">Load sample</button>
+  <label><input type="checkbox" id="bypass"> bypass run cache</label></div>
+<div class="tabs"><button id="tForm" class="on" type="button">Form</button><button id="tJson" type="button">JSON (advanced)</button></div>
+ <div id="formBox">
+ <fieldset><legend>Policy</legend><div class="g">
+  <label class="w">Policy number<input id="f_policy_number"></label>
+  <label>Policy start<input type="date" id="f_policy_start_date"></label><label>Policy end<input type="date" id="f_policy_end_date"></label></div></fieldset>
+ <fieldset><legend>Loss</legend><div class="g">
+  <label>Date of loss<input type="date" id="f_date_of_loss"></label><label>Date reported<input type="date" id="f_date_reported"></label>
+  <label>City<input id="f_city"></label><label>State<input id="f_state"></label><label>Pincode<input id="f_pincode"></label>
+  <label>Claim type (declared)<select id="f_claim_type_declared"><option>unknown</option><option>own_damage</option><option>third_party</option><option>theft</option><option>total_loss</option></select></label>
+  <label class="w">What happened (free text)<textarea id="f_claim_description"></textarea></label>
+  <label class="w">Damage claimed<input id="f_claimed_damage"></label>
+  <label>Estimated repair cost (INR)<input type="number" min="0" id="f_estimated_repair_cost_inr"></label></div></fieldset>
+ <fieldset><legend>Vehicle</legend><div class="g">
+  <label>Registration<input id="f_registration"></label><label>Class<select id="f_vehicle_class"><option>private_car</option><option>two_wheeler</option><option>commercial</option><option>other</option></select></label>
+  <label>Make<input id="f_make"></label><label>Model<input id="f_model"></label>
+  <label>Year of manufacture<input type="number" id="f_year_of_manufacture"></label><label>IDV (INR)<input type="number" min="1" id="f_idv_inr"></label>
+  <label class="chk"><input type="checkbox" id="f_drivable">Vehicle is drivable</label></div></fieldset>
+ <fieldset><legend>Driver</legend><div class="g">
+  <label>Driver age<input type="number" id="f_age"></label>
+  <label class="chk"><input type="checkbox" id="f_is_owner">Driver is the owner</label>
+  <label class="chk"><input type="checkbox" id="f_licence_valid">Licence valid</label></div></fieldset>
+ <fieldset><legend>Third party, injuries, police</legend><div class="g">
+  <label class="chk"><input type="checkbox" id="f_third_party_involved">Third party involved</label><label>Third-party damage (INR)<input type="number" min="0" id="f_third_party_damage_inr"></label>
+  <label class="chk"><input type="checkbox" id="f_injuries_reported">Injuries reported</label><label>Number injured<input type="number" min="0" id="f_injured_count"></label>
+  <label class="chk"><input type="checkbox" id="f_filed">Police report / FIR filed</label><label>FIR number<input id="f_fir_number"></label>
+  <label>Contact phone<input id="f_contact_phone"></label><label>Your reference<input id="f_client_reference"></label></div></fieldset>
+ </div>
+ <textarea id="body" spellcheck="false" hidden></textarea>
+ <div class="row"><button class="primary" id="send">Submit FNOL</button><span id="state" class="mut"></span></div>
+</section>
+<section id="out"><h2>Result</h2><div class="mut">Submit a claim to see the recommendation.</div></section>
+<section class="full" id="traceBox" hidden><h2>Run trace <span class="mut" id="tmeta"></span></h2><div id="trace"></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id); let samples={}, runId=null;
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+fetch('/v1/samples').then(r=>r.json()).then(s=>{samples=s;for(const k in s){const o=document.createElement('option');o.textContent=k;$('sample').appendChild(o)}load()});
+const F=id=>$('f_'+id), setv=(id,v)=>{const e=F(id); if(e.type==='checkbox')e.checked=!!v; else e.value=v??''};
+const getv=id=>{const e=F(id); return e.type==='checkbox'?e.checked:e.value.trim()};
+const num=id=>{const v=getv(id); return v===''?null:Number(v)}, txt=id=>{const v=getv(id); return v===''?null:v};
+function objToForm(o){o=o||{};const v=o.vehicle||{},d=o.driver||{},l=o.location||{},p=o.police_report||{};
+ for(const k of ['policy_number','policy_start_date','policy_end_date','date_of_loss','date_reported','claim_type_declared','claim_description','claimed_damage','estimated_repair_cost_inr','third_party_involved','third_party_damage_inr','injuries_reported','injured_count','contact_phone','client_reference'])setv(k,o[k]);
+ setv('city',l.city);setv('state',l.state);setv('pincode',l.pincode);
+ for(const k of ['registration','vehicle_class','make','model','year_of_manufacture','idv_inr','drivable'])setv(k,v[k]);
+ setv('age',d.age);setv('is_owner',d.is_owner);setv('licence_valid',d.licence_valid);setv('filed',p.filed);setv('fir_number',p.fir_number)}
+function formToObj(){const o={policy_number:getv('policy_number'),policy_start_date:getv('policy_start_date'),policy_end_date:getv('policy_end_date'),date_of_loss:getv('date_of_loss'),
+ location:{city:getv('city'),state:getv('state')},
+ vehicle:{registration:getv('registration'),make:getv('make'),model:getv('model'),year_of_manufacture:num('year_of_manufacture'),vehicle_class:getv('vehicle_class'),idv_inr:num('idv_inr'),drivable:getv('drivable')},
+ driver:{is_owner:getv('is_owner'),age:num('age'),licence_valid:getv('licence_valid')},
+ claim_type_declared:getv('claim_type_declared'),third_party_involved:getv('third_party_involved'),third_party_damage_inr:num('third_party_damage_inr')??0,
+ injuries_reported:getv('injuries_reported'),injured_count:num('injured_count')??0,police_report:{filed:getv('filed')},
+ claim_description:getv('claim_description'),claimed_damage:getv('claimed_damage')};
+ const opt=(t,k,v)=>{if(v!==null&&v!=='')t[k]=v};
+ opt(o,'date_reported',txt('date_reported'));opt(o,'estimated_repair_cost_inr',num('estimated_repair_cost_inr'));opt(o,'contact_phone',txt('contact_phone'));opt(o,'client_reference',txt('client_reference'));
+ opt(o.location,'pincode',txt('pincode'));opt(o.police_report,'fir_number',txt('fir_number'));
+ if(F('licence_valid').checked)o.driver.licence_valid=true; else o.driver.licence_valid=false;
+ return o}
+let mode='form';
+function show(m){mode=m;$('formBox').hidden=m!=='form';$('body').hidden=m!=='json';$('tForm').classList.toggle('on',m==='form');$('tJson').classList.toggle('on',m==='json')}
+$('tJson').onclick=()=>{if(mode==='form')$('body').value=JSON.stringify(formToObj(),null,2);show('json')};
+$('tForm').onclick=()=>{if(mode==='json'){try{objToForm(JSON.parse($('body').value))}catch(e){alert('JSON is not valid, so the form was not updated: '+e.message)}}show('form')};
+function load(){const o=samples[$('sample').value];objToForm(o);$('body').value=JSON.stringify(o,null,2)}
+$('load').onclick=load; $('sample').onchange=load;
+$('send').onclick=async()=>{
+  $('out').innerHTML='<h2>Result</h2><div class="mut">Submitting...</div>'; $('traceBox').hidden=true;
+  const t0=Date.now();
+  const r=await fetch('/v1/claims',{method:'POST',headers:{'Content-Type':'application/json',...($('bypass').checked?{'X-Bypass-Cache':'1'}:{})},body:mode==='form'?JSON.stringify(formToObj()):$('body').value});
+  const j=await r.json().catch(()=>({}));
+  if(r.status!==202){
+    $('out').innerHTML=`<h2>Result</h2><p class="bad"><b>Rejected (HTTP ${r.status})</b> - no agent run was started.</p>`+
+      (j.quarantine_id?`<p>Quarantine id: <code>${esc(j.quarantine_id)}</code></p>`:'')+
+      `<table><tr><th>field</th><th>code</th><th>message</th></tr>${(j.errors||[]).map(e=>`<tr><td>${esc(e.field)}</td><td>${esc(e.code)}</td><td>${esc(e.message)}</td></tr>`).join('')}</table>`+
+      (j.error==='rate_limited'?`<p>${esc(j.detail)}</p>`:''); return}
+  runId=j.run_id;
+  while(true){
+    const s=await (await fetch('/v1/runs/'+runId)).json();
+    $('state').textContent=`run ${runId}: ${s.status} (${((Date.now()-t0)/1000).toFixed(1)}s)`;
+    if(['completed','escalated','failed'].includes(s.status)){render(s);break}
+    await new Promise(r=>setTimeout(r,400));
+  }
+};
+function render(s){
+  const res=s.result||{}, rec=res.recommendation, esc_=res.escalation||{};
+  let h=`<h2>Result</h2><div class="row"><span class="tag ${s.status==='completed'?'ok':'warn'}">${esc(s.status)}</span>`+
+    (res.degraded?'<span class="tag bad">degraded path</span>':'')+(res.timings?.served_from_cache?'<span class="tag">served from cache</span>':'')+
+    `<span class="tag mut">${esc(res.timings?.end_to_end_s)}s</span><span class="tag mut">cost $${esc(res.cost_usd)}</span></div>`;
+  if(rec){
+    h+=`<p><b>Route:</b> <span class="tag ok">${esc(rec.route)}</span><br><span class="mut">${esc(rec.route_reason)}</span></p>
+     <p><b>Claim type:</b> ${esc(rec.claim_type)} &nbsp; <b>Coverage position:</b> ${esc(rec.coverage_position)} &nbsp; <b>Within permitted use:</b> ${esc(rec.within_permitted_use)}</p>
+     <p>${esc(rec.summary)}</p><h2>Citations</h2>`+
+     rec.citations.map(c=>`<div><b>${esc(c.clause_id)}</b> <span class="tag">${esc(c.role)}</span> <span class="mut">${esc(c.section)} - ${esc(c.source)} p.${c.page_start}${c.page_end!==c.page_start?'-'+c.page_end:''}</span><blockquote>${esc(c.quote)}</blockquote></div>`).join('');
+    h+=`<p class="mut">${esc(rec.advisory_notice)}</p>`;
+  }else{
+    h+=`<p class="warn"><b>Escalated to a human - no coverage answer was produced.</b></p><p><b>Reason:</b> ${esc(esc_.reason_code)}<br>${esc(esc_.detail)}</p>
+     <p><b>Escalation path:</b> ${esc((esc_.escalation_path||[]).join(' -> '))}</p>`;
+    const pf=res.partial_findings; if(pf){h+=`<h2>Findings for the handler</h2><pre>${esc(JSON.stringify({tentative_route:pf.tentative_route,triage:pf.triage,evidence:(pf.evidence||[]).slice(0,5)},null,1))}</pre>`}
+  }
+  if(res.security_flags?.length)h+=`<p class="bad">Security flags: ${esc(res.security_flags.join(', '))}</p>`;
+  if(res.verification?.checks)h+=`<h2>Verification</h2><table>${res.verification.checks.map(c=>`<tr><td class="${c.passed?'ok':'bad'}">${c.passed?'pass':'FAIL'}</td><td>${esc(c.id)}</td><td class="mut">${esc(c.detail)}</td></tr>`).join('')}</table>`;
+  h+=`<h2>Feedback</h2><div class="row"><select id="fbv"><option value="true">satisfactory</option><option value="false">not satisfactory</option></select><input id="fbr" placeholder="reason" size="30"><button id="fbs">Send</button><span id="fbm" class="mut"></span></div>`;
+  h+=`<div class="row"><button id="tr">Show trace</button></div>`;
+  $('out').innerHTML=h;
+  $('fbs').onclick=async()=>{const r=await fetch(`/v1/runs/${runId}/feedback`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({satisfactory:$('fbv').value==='true',reason:$('fbr').value||'n/a'})});$('fbm').textContent=r.ok?'saved':'error '+r.status};
+  $('tr').onclick=showTrace;
+}
+async function showTrace(){
+  const t=await (await fetch(`/v1/runs/${runId}/trace`)).json();
+  $('traceBox').hidden=false; $('tmeta').textContent=`${t.run_id} - correlation ${t.correlation_id} - prompts ${Object.values(t.prompt_versions).join(', ')} - ${t.totals.llm_calls} LLM calls, ${t.totals.tool_calls} tool calls, ${t.totals.prompt_tokens}+${t.totals.completion_tokens} tokens`;
+  $('trace').innerHTML=`<table><tr><th>#</th><th>agent</th><th>type</th><th>step</th><th>latency</th><th>detail</th></tr>`+t.events.map(e=>{
+    let d=e.type==='tool_call'?`${e.tool} ${JSON.stringify(e.args)} -> ${(e.passages||[]).map(p=>p.clause_id+' ('+p.score+')').join(', ')||e.result_preview||e.error?.code||''}${e.cache?' ['+e.cache+']':''}`
+      :e.type==='llm_call'?`${e.action||''} ${e.tool||''} ${e.thought||''} | ${e.prompt_version||''} | ${e.prompt_tokens||0}+${e.completion_tokens||0} tok $${e.cost_usd||0} ${e.error||''}`
+      :e.type==='verification'?`${e.passed?'PASS':'FAIL'} ${(e.verdict?.issues||[]).join('; ')}`
+      :e.type==='route'?`${e.route}: ${e.reason}`:e.type==='handoff'?`claim_type=${e.handoff.claim_type} purpose=${e.handoff.entities.use_purpose} source=${e.handoff.source}`
+      :JSON.stringify(e).slice(0,200);
+    return `<tr><td>${e.seq}</td><td>${esc(e.agent)}</td><td>${esc(e.type)}</td><td>${esc(e.step)}</td><td>${e.latency_s??''}</td><td>${esc(d)}</td></tr>`}).join('')+'</table>';
+}
+</script></body></html>

@@ -1,0 +1,16 @@
+top - 07:18:17 up 11 min,  0 user,  load average: 0.82, 0.58, 0.29
+Tasks:  78 total,   1 running,  77 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 33.3 us,  0.0 sy,  0.0 ni, 66.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st 
+MiB Mem :   8027.6 total,   6787.5 free,   1128.2 used,    334.2 buff/cache     
+MiB Swap:      0.0 total,      0.0 free,      0.0 used.   6899.4 avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+ 1089 root      20   0  704576 147856  21076 S  45.5   1.8   0:04.78 python
+ 1091 root      20   0  703548 141776  21056 S  36.4   1.7   0:04.72 python
+ 1071 root      20   0  172740  52124  17724 S   9.1   0.6   0:01.53 uvicorn
+ 1072 root      20   0  768460 105236  34248 S   9.1   1.3   0:02.97 uvicorn
+ 1112 root      20   0  444300  59508  20688 S   9.1   0.7   0:02.81 locust
+    1 root      20   0   21712   6552   6108 S   0.0   0.1   0:01.39 process_api
+    2 root      20   0       0      0      0 S   0.0   0.0   0:00.00 kthreadd
+    3 root      20   0       0      0      0 S   0.0   0.0   0:00.00 pool_workqueue_release
+    4 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/R-rcu_gp

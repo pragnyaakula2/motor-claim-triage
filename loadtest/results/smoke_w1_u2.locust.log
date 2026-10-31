@@ -1,0 +1,26 @@
+[2026-10-30 07:09:29,701] vm/INFO/locust.main: Starting Locust 2.47.0
+[2026-10-30 07:09:29,702] vm/INFO/locust.main: Run time limit set to 60 seconds
+[2026-10-30 07:09:29,703] vm/INFO/locust.runners: Ramping to 2 users at a rate of 2.00 per second
+[2026-10-30 07:09:29,704] vm/INFO/locust.runners: All users spawned: {"Claimant": 2} (2 total users)
+[2026-10-30 07:10:21,036] vm/WARNING/urllib3.connectionpool: Connection pool is full, discarding connection: localhost. Connection pool size: 10
+[2026-10-30 07:10:21,036] vm/WARNING/urllib3.connectionpool: Connection pool is full, discarding connection: localhost. Connection pool size: 10
+[2026-10-30 07:10:21,039] vm/WARNING/urllib3.connectionpool: Connection pool is full, discarding connection: localhost. Connection pool size: 10
+[2026-10-30 07:10:29,702] vm/INFO/locust.main: --run-time limit reached, shutting down
+[2026-10-30 07:10:29,722] vm/INFO/locust.main: Shutting down (exit code 0)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+GET      GET /v1/runs/{id} (poll)                                                        2283     0(0.00%) |      7       1     139      5 |   38.26        0.00
+POST     POST /v1/claims (submit only)                                                    120     0(0.00%) |     10       6      64      9 |    2.01        0.00
+RUN      e2e                                                                               68     0(0.00%) |  15487    4194   26409  16000 |    1.14        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                      2471     0(0.00%) |    433       1   26409      5 |   41.41        0.00
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+GET      GET /v1/runs/{id} (poll)                                                                5      6      8      9     12     16     23     70    130    140    140   2283
+POST     POST /v1/claims (submit only)                                                           9     10     11     11     12     13     16     49     64     64     64    120
+RUN      e2e                                                                                 16000  19000  21000  22000  24000  25000  26000  26000  26000  26000  26000     68
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                              5      7      8      9     13     21  10000  19000  25000  26000  26000   2471
+

@@ -1,0 +1,16 @@
+{
+ "runs_completed": 1015,
+ "infra_failures": 0,
+ "failure_pct": 0.0,
+ "e2e_p50_ms": 4400.0,
+ "e2e_p95_ms": 5300.0,
+ "e2e_p99_ms": 5400.0,
+ "e2e_max_ms": 5820.924758911133,
+ "completed_runs_per_s": 11.373822667077492,
+ "submit_p95_ms": 120.0,
+ "submit_failures": 0,
+ "meets_p95": true,
+ "meets_failure_rate": true,
+ "meets_rps": true,
+ "SLO_MET": true
+}

@@ -1,0 +1,89 @@
+{
+  "$defs": {
+    "Passage": {
+      "properties": {
+        "clause_id": {
+          "title": "Clause Id",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "page_start": {
+          "title": "Page Start",
+          "type": "integer"
+        },
+        "page_end": {
+          "title": "Page End",
+          "type": "integer"
+        },
+        "section": {
+          "title": "Section",
+          "type": "string"
+        },
+        "section_type": {
+          "title": "Section Type",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "score": {
+          "title": "Score",
+          "type": "number"
+        },
+        "refs": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Refs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "clause_id",
+        "source",
+        "page_start",
+        "page_end",
+        "section",
+        "section_type",
+        "text",
+        "score"
+      ],
+      "title": "Passage",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "passages": {
+      "items": {
+        "$ref": "#/$defs/Passage"
+      },
+      "title": "Passages",
+      "type": "array"
+    },
+    "index_version": {
+      "title": "Index Version",
+      "type": "string"
+    },
+    "mode": {
+      "title": "Mode",
+      "type": "string"
+    },
+    "top_score": {
+      "title": "Top Score",
+      "type": "number"
+    }
+  },
+  "required": [
+    "passages",
+    "index_version",
+    "mode",
+    "top_score"
+  ],
+  "title": "SearchResponse",
+  "type": "object"
+}

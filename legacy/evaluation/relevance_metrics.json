@@ -1,0 +1,9 @@
+{
+  "Hit@3": 0.8,
+  "Hit@5": 1.0,
+  "Precision@5": 0.44,
+  "MRR": 0.74,
+  "number_of_claims": 5,
+  "number_of_passages": 51,
+  "manually_relevant_passages": 18
+}

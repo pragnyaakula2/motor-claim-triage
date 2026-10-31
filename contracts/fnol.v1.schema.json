@@ -1,0 +1,316 @@
+{
+  "$defs": {
+    "ClaimTypeDeclared": {
+      "enum": [
+        "own_damage",
+        "third_party",
+        "theft",
+        "total_loss",
+        "unknown"
+      ],
+      "title": "ClaimTypeDeclared",
+      "type": "string"
+    },
+    "Driver": {
+      "additionalProperties": false,
+      "properties": {
+        "is_owner": {
+          "title": "Is Owner",
+          "type": "boolean"
+        },
+        "age": {
+          "maximum": 99,
+          "minimum": 18,
+          "title": "Age",
+          "type": "integer"
+        },
+        "licence_valid": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Licence Valid"
+        }
+      },
+      "required": [
+        "is_owner",
+        "age"
+      ],
+      "title": "Driver",
+      "type": "object"
+    },
+    "Location": {
+      "additionalProperties": false,
+      "properties": {
+        "city": {
+          "maxLength": 60,
+          "minLength": 2,
+          "title": "City",
+          "type": "string"
+        },
+        "state": {
+          "title": "State",
+          "type": "string"
+        },
+        "pincode": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pincode"
+        }
+      },
+      "required": [
+        "city",
+        "state"
+      ],
+      "title": "Location",
+      "type": "object"
+    },
+    "PoliceReport": {
+      "additionalProperties": false,
+      "properties": {
+        "filed": {
+          "title": "Filed",
+          "type": "boolean"
+        },
+        "fir_number": {
+          "anyOf": [
+            {
+              "maxLength": 40,
+              "minLength": 3,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fir Number"
+        }
+      },
+      "required": [
+        "filed"
+      ],
+      "title": "PoliceReport",
+      "type": "object"
+    },
+    "Vehicle": {
+      "additionalProperties": false,
+      "properties": {
+        "registration": {
+          "title": "Registration",
+          "type": "string"
+        },
+        "make": {
+          "maxLength": 40,
+          "minLength": 2,
+          "title": "Make",
+          "type": "string"
+        },
+        "model": {
+          "maxLength": 60,
+          "minLength": 1,
+          "title": "Model",
+          "type": "string"
+        },
+        "year_of_manufacture": {
+          "maximum": 2027,
+          "minimum": 1990,
+          "title": "Year Of Manufacture",
+          "type": "integer"
+        },
+        "vehicle_class": {
+          "$ref": "#/$defs/VehicleClass"
+        },
+        "idv_inr": {
+          "description": "Insured Declared Value in INR",
+          "exclusiveMinimum": 0,
+          "maximum": 50000000,
+          "title": "Idv Inr",
+          "type": "number"
+        },
+        "drivable": {
+          "title": "Drivable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "registration",
+        "make",
+        "model",
+        "year_of_manufacture",
+        "vehicle_class",
+        "idv_inr",
+        "drivable"
+      ],
+      "title": "Vehicle",
+      "type": "object"
+    },
+    "VehicleClass": {
+      "enum": [
+        "private_car",
+        "two_wheeler",
+        "commercial",
+        "other"
+      ],
+      "title": "VehicleClass",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "First Notice of Loss - the inbound request body.",
+  "properties": {
+    "client_reference": {
+      "anyOf": [
+        {
+          "maxLength": 64,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Client Reference"
+    },
+    "policy_number": {
+      "title": "Policy Number",
+      "type": "string"
+    },
+    "policy_start_date": {
+      "format": "date",
+      "title": "Policy Start Date",
+      "type": "string"
+    },
+    "policy_end_date": {
+      "format": "date",
+      "title": "Policy End Date",
+      "type": "string"
+    },
+    "date_of_loss": {
+      "format": "date",
+      "title": "Date Of Loss",
+      "type": "string"
+    },
+    "date_reported": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Date Reported"
+    },
+    "location": {
+      "$ref": "#/$defs/Location"
+    },
+    "vehicle": {
+      "$ref": "#/$defs/Vehicle"
+    },
+    "driver": {
+      "$ref": "#/$defs/Driver"
+    },
+    "claim_type_declared": {
+      "$ref": "#/$defs/ClaimTypeDeclared",
+      "default": "unknown"
+    },
+    "estimated_repair_cost_inr": {
+      "anyOf": [
+        {
+          "maximum": 50000000,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Estimated Repair Cost Inr"
+    },
+    "third_party_involved": {
+      "default": false,
+      "title": "Third Party Involved",
+      "type": "boolean"
+    },
+    "third_party_damage_inr": {
+      "default": 0,
+      "maximum": 50000000,
+      "minimum": 0,
+      "title": "Third Party Damage Inr",
+      "type": "number"
+    },
+    "injuries_reported": {
+      "default": false,
+      "title": "Injuries Reported",
+      "type": "boolean"
+    },
+    "injured_count": {
+      "default": 0,
+      "maximum": 20,
+      "minimum": 0,
+      "title": "Injured Count",
+      "type": "integer"
+    },
+    "police_report": {
+      "$ref": "#/$defs/PoliceReport",
+      "default": {
+        "filed": false,
+        "fir_number": null
+      }
+    },
+    "contact_phone": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Contact Phone"
+    },
+    "claim_description": {
+      "maxLength": 2000,
+      "minLength": 20,
+      "title": "Claim Description",
+      "type": "string"
+    },
+    "claimed_damage": {
+      "maxLength": 500,
+      "minLength": 3,
+      "title": "Claimed Damage",
+      "type": "string"
+    }
+  },
+  "required": [
+    "policy_number",
+    "policy_start_date",
+    "policy_end_date",
+    "date_of_loss",
+    "location",
+    "vehicle",
+    "driver",
+    "claim_description",
+    "claimed_damage"
+  ],
+  "title": "FNOL",
+  "type": "object",
+  "x-contract-version": "fnol.v1"
+}

@@ -1,0 +1,7 @@
+.env
+.devstack/
+__pycache__/
+*.pyc
+data/index/
+loadtest/results/*.csv
+.venv/

@@ -1,0 +1,18 @@
+{
+  "test_cases": 5,
+  "total_evidence_results": 51,
+  "cases_with_evidence": 5,
+  "cases_without_evidence": [],
+  "results_with_source": 51,
+  "results_with_valid_page": 51,
+  "results_with_text": 51,
+  "limitations": [
+    "Retrieval results are not proof of legal relevance.",
+    "Similarity scores are not coverage probabilities.",
+    "Manual relevance labels are required for Hit@K and MRR.",
+    "Results use one policy corpus and five test scenarios."
+  ],
+  "results_with_source_rate": 1.0,
+  "results_with_valid_page_rate": 1.0,
+  "results_with_text_rate": 1.0
+}

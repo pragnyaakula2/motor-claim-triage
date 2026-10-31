@@ -1,0 +1,3 @@
+# Production embedding backend. Only the retrieval image needs it (EMBEDDING_BACKEND=sentence_transformers).
+# NOT exercised in the development environment, which used EMBEDDING_BACKEND=hashing - see docs/REPORT.md.
+sentence-transformers

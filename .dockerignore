@@ -1,0 +1,8 @@
+.git
+.devstack
+**/__pycache__
+legacy
+loadtest/results
+evaluation/results
+.env
+data/index

@@ -1,0 +1,112 @@
+# docker compose up --build -d                      # whole system, offline defaults
+# docker compose up -d --scale agent-worker=3       # scale the coverage agent
+# docker compose --profile load up locust           # load test UI on :8089
+name: claimtriage
+x-app-env: &app-env
+  env_file: [.env]
+  environment:
+    REDIS_URL: redis://redis:6379/0
+    RETRIEVAL_URL: http://retrieval:8100
+    METRICS_PORT: "9100"
+x-app: &app
+  <<: *app-env
+  image: claimtriage-app
+  build: {context: ., target: app}
+  restart: unless-stopped
+
+services:
+  redis:                       # queue (Streams) + run store + caches + rate limiter; AOF so queued runs survive a restart
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes", "--appendfsync", "everysec"]
+    volumes: [redis-data:/data]
+    healthcheck: {test: ["CMD", "redis-cli", "ping"], interval: 5s, timeout: 3s, retries: 10}
+    restart: unless-stopped
+
+  llm-stub:                    # stand-in for the LLM provider; used for dev, CI and the load test
+    <<: *app
+    command: ["uvicorn", "stub.llm_stub:app", "--host", "0.0.0.0", "--port", "8200", "--log-level", "warning"]
+    ports: ["8200:8200"]
+    healthcheck: {test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:8200/health')"], interval: 5s, timeout: 3s, retries: 10}
+
+  retrieval:                   # read-only index service (FAISS + BM25); index and embedding model are baked into the image
+    <<: *app-env
+    image: claimtriage-retrieval
+    build:
+      context: .
+      target: retrieval
+      args: {EMBEDDING_BACKEND: "${EMBEDDING_BACKEND:-hashing}", EMBEDDING_MODEL: "${EMBEDDING_MODEL:-}"}
+    ports: ["8100:8100"]
+    healthcheck: {test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:8100/health')"], interval: 5s, timeout: 3s, retries: 20, start_period: 10s}
+    restart: unless-stopped
+
+  api:
+    <<: *app
+    ports: ["8000:8000"]
+    depends_on:
+      redis: {condition: service_healthy}
+      retrieval: {condition: service_healthy}
+    healthcheck: {test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:8000/health')"], interval: 5s, timeout: 3s, retries: 10}
+
+  triage-agent:                # agent 1: its own process, reads the fnol stream
+    <<: *app
+    command: ["python", "-m", "claimtriage.worker"]
+    environment: {WORKER_ROLE: triage, REDIS_URL: "redis://redis:6379/0", RETRIEVAL_URL: "http://retrieval:8100", METRICS_PORT: "9100"}
+    depends_on:
+      redis: {condition: service_healthy}
+      llm-stub: {condition: service_healthy}
+    healthcheck: {test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:9100/metrics')"], interval: 10s, timeout: 3s, retries: 5}
+
+  agent-worker:                # agent 2 (coverage): stateless, scale with --scale agent-worker=N (no fixed names or host ports)
+    <<: *app
+    command: ["python", "-m", "claimtriage.worker"]
+    environment: {WORKER_ROLE: coverage, REDIS_URL: "redis://redis:6379/0", RETRIEVAL_URL: "http://retrieval:8100", METRICS_PORT: "9100"}
+    depends_on:
+      redis: {condition: service_healthy}
+      retrieval: {condition: service_healthy}
+      llm-stub: {condition: service_healthy}
+    healthcheck: {test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:9100/metrics')"], interval: 10s, timeout: 3s, retries: 5}
+
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    volumes: [./deploy/prometheus.yml:/etc/prometheus/prometheus.yml:ro]
+    ports: ["9090:9090"]
+    healthcheck: {test: ["CMD", "wget", "-qO-", "http://localhost:9090/-/healthy"], interval: 10s, timeout: 3s, retries: 5}
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:11.3.0
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+    volumes:
+      - ./deploy/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./deploy/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports: ["3000:3000"]
+    depends_on: [prometheus]
+    restart: unless-stopped
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.62.0
+    environment: {COLLECTOR_OTLP_ENABLED: "true"}
+    ports: ["16686:16686"]
+    restart: unless-stopped
+
+  cadvisor:                    # per-container CPU / memory for the dashboard
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    volumes: ["/:/rootfs:ro", "/var/run:/var/run:ro", "/sys:/sys:ro", "/var/lib/docker/:/var/lib/docker:ro"]
+    ports: ["8081:8080"]
+    restart: unless-stopped
+
+  locust:
+    profiles: ["load"]
+    <<: *app
+    image: claimtriage-load
+    build: {context: ., dockerfile: loadtest/Dockerfile}
+    command: ["locust", "-f", "/app/loadtest/locustfile.py", "--host", "http://api:8000"]
+    environment: {RATE_LIMIT_PER_MIN: "100000"}
+    ports: ["8089:8089"]
+    depends_on: {api: {condition: service_healthy}}
+
+volumes:
+  redis-data:

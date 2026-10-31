@@ -1,0 +1,66 @@
+{
+  "$defs": {
+    "ClauseRef": {
+      "properties": {
+        "phrase": {
+          "title": "Phrase",
+          "type": "string"
+        },
+        "resolved_to": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Resolved To",
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "resolved",
+            "unresolved"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "note": {
+          "default": "",
+          "title": "Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "phrase",
+        "resolved_to",
+        "status"
+      ],
+      "title": "ClauseRef",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "clause_id": {
+      "title": "Clause Id",
+      "type": "string"
+    },
+    "refs": {
+      "items": {
+        "$ref": "#/$defs/ClauseRef"
+      },
+      "title": "Refs",
+      "type": "array"
+    },
+    "suggested_queries": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Suggested Queries",
+      "type": "array"
+    }
+  },
+  "required": [
+    "clause_id",
+    "refs",
+    "suggested_queries"
+  ],
+  "title": "CrossRefResponse",
+  "type": "object"
+}
