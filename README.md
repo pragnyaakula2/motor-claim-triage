@@ -5,7 +5,7 @@ UE24AM342AA5 Mini Project 01. Validates a first notice of loss, triages it, retr
 
 ## Run it
 ```
-cp .env.example .env              # defaults need no credentials: scripted LLM stub + hashing embedder
+cp .env.example .env              # optional: the defaults need no .env, no credentials (scripted LLM stub + hashing embedder)
 docker compose up --build -d --scale agent-worker=3
 curl localhost:8000/ready
 python scripts/submit.py food     # section 4.1 case; needs `pip install httpx pydantic` locally

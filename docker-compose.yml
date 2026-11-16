@@ -2,12 +2,19 @@
 # docker compose up -d --scale agent-worker=3       # scale the coverage agent
 # docker compose --profile load up locust           # load test UI on :8089
 name: claimtriage
+x-env: &env                    # defaults let `docker compose up` work from a clean clone with NO .env; a .env overrides them
+  REDIS_URL: redis://redis:6379/0
+  RETRIEVAL_URL: http://retrieval:8100
+  METRICS_PORT: "9100"
+  LLM_BASE_URL: ${LLM_BASE_URL:-http://llm-stub:8200/v1}
+  LLM_API_KEY: ${LLM_API_KEY:-dev}
+  LLM_MODEL: ${LLM_MODEL:-stub-scripted}
+  EMBEDDING_BACKEND: ${EMBEDDING_BACKEND:-hashing}
+  WORKER_CONCURRENCY: ${WORKER_CONCURRENCY:-16}
+  OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-http://jaeger:4318}
 x-app-env: &app-env
-  env_file: [.env]
-  environment:
-    REDIS_URL: redis://redis:6379/0
-    RETRIEVAL_URL: http://retrieval:8100
-    METRICS_PORT: "9100"
+  env_file: [{path: .env, required: false}]
+  environment: *env
 x-app: &app
   <<: *app-env
   image: claimtriage-app
@@ -50,7 +57,7 @@ services:
   triage-agent:                # agent 1: its own process, reads the fnol stream
     <<: *app
     command: ["python", "-m", "claimtriage.worker"]
-    environment: {WORKER_ROLE: triage, REDIS_URL: "redis://redis:6379/0", RETRIEVAL_URL: "http://retrieval:8100", METRICS_PORT: "9100"}
+    environment: {<<: *env, WORKER_ROLE: triage}
     depends_on:
       redis: {condition: service_healthy}
       llm-stub: {condition: service_healthy}
@@ -59,7 +66,7 @@ services:
   agent-worker:                # agent 2 (coverage): stateless, scale with --scale agent-worker=N (no fixed names or host ports)
     <<: *app
     command: ["python", "-m", "claimtriage.worker"]
-    environment: {WORKER_ROLE: coverage, REDIS_URL: "redis://redis:6379/0", RETRIEVAL_URL: "http://retrieval:8100", METRICS_PORT: "9100"}
+    environment: {<<: *env, WORKER_ROLE: coverage}
     depends_on:
       redis: {condition: service_healthy}
       retrieval: {condition: service_healthy}
@@ -104,7 +111,7 @@ services:
     image: claimtriage-load
     build: {context: ., dockerfile: loadtest/Dockerfile}
     command: ["locust", "-f", "/app/loadtest/locustfile.py", "--host", "http://api:8000"]
-    environment: {RATE_LIMIT_PER_MIN: "100000"}
+    environment: {<<: *env, RATE_LIMIT_PER_MIN: "100000"}
     ports: ["8089:8089"]
     depends_on: {api: {condition: service_healthy}}
 
