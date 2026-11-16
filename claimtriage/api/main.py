@@ -170,6 +170,9 @@ async def submit_claim(request: Request):
         fp = claim_fingerprint(claim, pv, meta["index_version"])
         hit = store().cache_get("run", fp)
         if hit:
+            src = hit.pop("source_run_id", None)
+            store().append_event(run_id, {"seq": 1, "agent": "api", "type": "cache_hit", "step": "run_cache", "latency_s": 0.0,
+                                          "source_run_id": src, "detail": "Identical verified claim served from the run cache; no agents ran."})
             res = {"run_id": run_id, "status": "completed", "degraded": False, "security_flags": [], "cost_usd": 0.0, "tokens": {},
                    "timings": {"end_to_end_s": 0.0, "served_from_cache": True}, **hit}
             store().update_run(run_id, result=res, status="completed")

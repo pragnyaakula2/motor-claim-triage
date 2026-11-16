@@ -141,6 +141,7 @@ async function showTrace(){
     let d=e.type==='tool_call'?`${e.tool} ${JSON.stringify(e.args)} -> ${(e.passages||[]).map(p=>p.clause_id+' ('+p.score+')').join(', ')||e.result_preview||e.error?.code||''}${e.cache?' ['+e.cache+']':''}`
       :e.type==='llm_call'?`${e.action||''} ${e.tool||''} ${e.thought||''} | ${e.prompt_version||''} | ${e.prompt_tokens||0}+${e.completion_tokens||0} tok $${e.cost_usd||0} ${e.error||''}`
       :e.type==='verification'?`${e.passed?'PASS':'FAIL'} ${(e.verdict?.issues||[]).join('; ')}`
+      :e.type==='cache_hit'?`${e.detail} Original run: ${e.source_run_id||'unknown'}. Tick "bypass run cache" to see a full trace.`
       :e.type==='route'?`${e.route}: ${e.reason}`:e.type==='handoff'?`claim_type=${e.handoff.claim_type} purpose=${e.handoff.entities.use_purpose} source=${e.handoff.source}`
       :JSON.stringify(e).slice(0,200);
     return `<tr><td>${e.seq}</td><td>${esc(e.agent)}</td><td>${esc(e.type)}</td><td>${esc(e.step)}</td><td>${e.latency_s??''}</td><td>${esc(d)}</td></tr>`}).join('')+'</table>';

@@ -218,7 +218,7 @@ class Worker:
             try:
                 iv = tools._safe_ver() if tools else "?"
                 fp = claim_fingerprint(run["claim"], run["meta"]["prompt_versions"], iv)
-                self.store.cache_set("run", fp, {k: result[k] for k in ("recommendation", "escalation", "verification", "prompt_versions")}, ttl=self.s.cache_ttl_s)
+                self.store.cache_set("run", fp, {**{k: result[k] for k in ("recommendation", "escalation", "verification", "prompt_versions")}, "source_run_id": result["run_id"]}, ttl=self.s.cache_ttl_s)
             except Exception:
                 pass
         if random.random() < self.s.quality_sample_rate and tools is not None and out["kind"] == "answer":
